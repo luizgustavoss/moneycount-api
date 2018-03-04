@@ -8,12 +8,15 @@ import java.util.List;
 public class EventoFinanceiro {
 
 	private String id;
+	private String codigo;
+	private String descricao;
 	private List<LancamentoFinanceiro> lancamentos;
 	private Moeda moeda;
 	
-	
-	private EventoFinanceiro(String id, Moeda moeda) {
+	private EventoFinanceiro(String id, String codigo, String descricao, Moeda moeda) {
 		this.id = id;
+		this.codigo = codigo;
+		this.descricao = descricao;
 		this.moeda = moeda;
 		this.lancamentos = new ArrayList<>();
 	}
@@ -39,6 +42,14 @@ public class EventoFinanceiro {
 
 	public String getId() {
 		return id;
+	}
+	
+	public String getCodigo() {
+		return codigo;
+	}
+	
+	public String getDescricao() {
+		return descricao;
 	}
 	
 	public Moeda getMoeda() {

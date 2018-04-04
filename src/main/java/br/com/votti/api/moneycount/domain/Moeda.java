@@ -1,11 +1,13 @@
 package br.com.votti.api.moneycount.domain;
 
 import java.math.BigDecimal;
-import java.util.Set;
 import java.util.SortedSet;
 
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
+
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
 
 /**
  * Uma Moeda permite representar moedas atualmente em circulação em determinados países 
@@ -25,6 +27,8 @@ import org.springframework.util.StringUtils;
  * @author Luiz Gustavo S. de Souza (luizgustavoss@gmail.com)
  *
  */
+@Getter
+@EqualsAndHashCode(of={"codigo", "nome", "simboloMonetario", "valores"})
 public class Moeda {
 
 	private String codigo;
@@ -44,57 +48,6 @@ public class Moeda {
 		this.nome = nome;
 		this.simboloMonetario = simboloMonetario;
 		this.valores = valores;
-	}
-	
-	public String getCodigo() {
-		return codigo;
-	}
-
-	public String getSimboloMonetario() {
-		return simboloMonetario;
-	}
-
-	public Set<BigDecimal> getValores() {
-		return valores;
-	}
-
-	public String getNome() {
-		return nome;
-	}
-
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + codigo.hashCode();
-		result = prime * result + nome.hashCode();
-		result = prime * result + simboloMonetario.hashCode();
-		result = prime * result + valores.hashCode();
-		return result;
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Moeda other = (Moeda) obj;
-		if (!codigo.equals(other.codigo)) {
-			return false;
-		}
-		if (!nome.equals(other.nome)) {
-			return false;
-		}
-		if (!simboloMonetario.equals(other.simboloMonetario)) {
-			return false;
-		}
-		if (!valores.equals(other.valores)) {
-			return false;
-		}
-		return true;
 	}
 
 }

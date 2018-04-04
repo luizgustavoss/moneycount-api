@@ -5,6 +5,11 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+
+@Getter
+@EqualsAndHashCode(of={"id", "codigo"})
 public class EventoFinanceiro {
 
 	private String id;
@@ -40,19 +45,4 @@ public class EventoFinanceiro {
 		return valorTotal;
 	}
 
-	public String getId() {
-		return id;
-	}
-	
-	public String getCodigo() {
-		return codigo;
-	}
-	
-	public String getDescricao() {
-		return descricao;
-	}
-	
-	public Moeda getMoeda() {
-		return moeda;
-	}
 }

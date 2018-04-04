@@ -1,34 +1,55 @@
 package br.com.votti.api.moneycount.domain;
 
-import java.math.BigDecimal;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.empty;
+import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.not;
+import static org.hamcrest.Matchers.notNullValue;
+
 import java.util.HashSet;
 import java.util.Set;
-import java.util.SortedSet;
 import java.util.TreeSet;
 
-import org.junit.Assert;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringRunner;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import br.com.votti.api.moneycount.infrastructure.RepositorioDeMoedasJson;
+
+@RunWith(SpringRunner.class)
+@SpringBootTest(classes={
+		FabricaDeMoeda.class, 
+		RepositorioDeMoedas.class, 
+		RepositorioDeMoedasJson.class})
 public class MoedaTest {
-
+	
+	@Autowired
+	private FabricaDeMoeda fabricaDeMoeda;
+	
 	@Test
 	public void testarCriacaoDeMoedaComSucesso() {
 		
-		Moeda moeda = new Moeda("USD", "Dollar", "$", getValoresMoedaDollar());
+		Moeda moeda = new Moeda("USD", "Dollar", "$", ConstrutorDeValoresDeMoedaParaTeste.getValoresMoedaDollar());
 		
-		Assert.assertNotNull(moeda);
-		Assert.assertNotNull(moeda.getCodigo());
-		Assert.assertEquals("USD", moeda.getCodigo());
+		assertThat(moeda, is(notNullValue()));
+		assertThat(moeda.getCodigo(), is(notNullValue()));
+		assertThat("USD", is(equalTo(moeda.getCodigo())));
 		
-		Assert.assertNotNull(moeda.getNome());
-		Assert.assertEquals("Dollar", moeda.getNome());
+		assertThat(moeda.getNome(), is(notNullValue()));
+		assertThat("Dollar", is(equalTo(moeda.getNome())));
 		
-		Assert.assertNotNull(moeda.getSimboloMonetario());
-		Assert.assertEquals("$", moeda.getSimboloMonetario());
+		assertThat(moeda.getSimboloMonetario(), is(notNullValue()));
+		assertThat("$", is(equalTo(moeda.getSimboloMonetario())));
 		
-		Assert.assertNotNull(moeda.getValores());
-		Assert.assertFalse(moeda.getValores().isEmpty());
-		Assert.assertEquals(12, moeda.getValores().size());
+		assertThat(moeda.getValores(), is(notNullValue()));
+		assertThat(moeda.getValores(), not(empty()));
+		assertThat(12, is(equalTo(moeda.getValores().size())));
 	}
 	
 	
@@ -36,39 +57,39 @@ public class MoedaTest {
 	@Test(expected=IllegalArgumentException.class)
 	public void testarCriacaoDeMoedaComCodigoVazio() {
 		
-		new Moeda("", "Dollar", "$", getValoresMoedaDollar());
+		new Moeda("", "Dollar", "$", ConstrutorDeValoresDeMoedaParaTeste.getValoresMoedaDollar());
 	}
 	
 	@Test(expected=IllegalArgumentException.class)
 	public void testarCriacaoDeMoedaComCodigoNulo() {
 		
-		new Moeda(null, "Dollar", "$", getValoresMoedaDollar());
+		new Moeda(null, "Dollar", "$", ConstrutorDeValoresDeMoedaParaTeste.getValoresMoedaDollar());
 	}
 	
 	
 	@Test(expected=IllegalArgumentException.class)
 	public void testarCriacaoDeMoedaComDescricaoVazia() {
 		
-		new Moeda("USD", "", "$", getValoresMoedaDollar());
+		new Moeda("USD", "", "$", ConstrutorDeValoresDeMoedaParaTeste.getValoresMoedaDollar());
 	}
 	
 	@Test(expected=IllegalArgumentException.class)
 	public void testarCriacaoDeMoedaComDescricaoNula() {
 		
-		new Moeda("USD", null, "$", getValoresMoedaDollar());
+		new Moeda("USD", null, "$", ConstrutorDeValoresDeMoedaParaTeste.getValoresMoedaDollar());
 	}
 	
 	
 	@Test(expected=IllegalArgumentException.class)
 	public void testarCriacaoDeMoedaComSimboloMonetarioVazio() {
 		
-		new Moeda("USD", "Dollar", "", getValoresMoedaDollar());
+		new Moeda("USD", "Dollar", "", ConstrutorDeValoresDeMoedaParaTeste.getValoresMoedaDollar());
 	}
 	
 	@Test(expected=IllegalArgumentException.class)
 	public void testarCriacaoDeMoedaComSimboloMonetarioNulo() {
 		
-		new Moeda("USD", "Dollar", null, getValoresMoedaDollar());
+		new Moeda("USD", "Dollar", null, ConstrutorDeValoresDeMoedaParaTeste.getValoresMoedaDollar());
 	}
 	
 	@Test(expected=IllegalArgumentException.class)
@@ -87,23 +108,20 @@ public class MoedaTest {
 	@Test
 	public void testarComparacaoDeMoedasIguais() {
 		
-		Moeda dollar1 = new Moeda("USD", "Dollar", "$", getValoresMoedaDollar());
-		Moeda dollar2 = new Moeda("USD", "Dollar", "$", getValoresMoedaDollar());
+		Moeda dollar1 = new Moeda("USD", "Dollar", "$", ConstrutorDeValoresDeMoedaParaTeste.getValoresMoedaDollar());
+		Moeda dollar2 = new Moeda("USD", "Dollar", "$", ConstrutorDeValoresDeMoedaParaTeste.getValoresMoedaDollar());
 		
-		Assert.assertTrue(dollar1.equals(dollar2));
-		Assert.assertTrue(dollar2.equals(dollar1));
-		
-		Assert.assertFalse(dollar2.equals(null));
-		
-		Assert.assertFalse(dollar2.equals("Moeda"));
-		
-		Assert.assertTrue(dollar2.equals(dollar2));
+		assertThat(dollar1, is(equalTo(dollar2)));
+		assertThat(dollar2, is(equalTo(dollar1)));
+		assertThat(dollar2, is(not(equalTo(null))));
+		assertThat(dollar2, is(not(equalTo("Moeda"))));
+		assertThat(dollar2, is(equalTo(dollar2)));
 		
 		Set<Moeda> moedas = new HashSet<>();
 		moedas.add(dollar1);
 		moedas.add(dollar2);
 		
-		Assert.assertEquals(1, moedas.size());
+		assertThat(1, is(equalTo(moedas.size())));
 	}
 	
 	
@@ -111,73 +129,44 @@ public class MoedaTest {
 	@Test
 	public void testarComparacaoDeMoedasDiferentes() {
 		
-		Moeda dollar = new Moeda("USD", "Dollar", "$", getValoresMoedaDollar());
-		Moeda real = new Moeda("BRL", "Real", "R$", getValoresMoedaReal());
+		Moeda dollar = new Moeda("USD", "Dollar", "$", ConstrutorDeValoresDeMoedaParaTeste.getValoresMoedaDollar());
+		Moeda real = new Moeda("BRL", "Real", "R$", ConstrutorDeValoresDeMoedaParaTeste.getValoresMoedaReal());
 		
-		Moeda fakedollar1 = new Moeda("USD", "Real", "R$", getValoresMoedaReal());
-		Moeda fakedollar2 = new Moeda("USD", "Dollar", "R$", getValoresMoedaReal());
-		Moeda fakedollar3 = new Moeda("USD", "Dollar", "$", getValoresMoedaReal());
+		Moeda fakedollar1 = new Moeda("USD", "Real", "R$", ConstrutorDeValoresDeMoedaParaTeste.getValoresMoedaReal());
+		Moeda fakedollar2 = new Moeda("USD", "Dollar", "R$", ConstrutorDeValoresDeMoedaParaTeste.getValoresMoedaReal());
+		Moeda fakedollar3 = new Moeda("USD", "Dollar", "$", ConstrutorDeValoresDeMoedaParaTeste.getValoresMoedaReal());
 		
-		Assert.assertFalse(dollar.equals(real));
-		Assert.assertFalse(real.equals(dollar));
+		assertThat(dollar, is(not(equalTo(real))));
+		assertThat(real, is(not(equalTo(dollar))));
 		
-		Assert.assertFalse(dollar.equals(fakedollar1));
-		Assert.assertFalse(dollar.equals(fakedollar2));
-		Assert.assertFalse(dollar.equals(fakedollar3));
+		assertThat(dollar, is(not(equalTo(fakedollar1))));
+		assertThat(dollar, is(not(equalTo(fakedollar2))));
+		assertThat(dollar, is(not(equalTo(fakedollar3))));
 		
-		Assert.assertTrue(real.equals(real));
+		assertThat(real, is(equalTo((real))));
 		
 		Set<Moeda> moedas = new HashSet<>();
 		moedas.add(dollar);
 		moedas.add(real);
 		
-		Assert.assertEquals(2, moedas.size());
+		assertThat(2, is(equalTo(moedas.size())));
 	}
 	
 	
-	
-	private SortedSet<BigDecimal> getValoresMoedaDollar(){
+	@Test
+	public void testarCriacaoDeListadeMoedasSuportadas() throws JsonProcessingException {
 		
-		SortedSet<BigDecimal> valoresMoeda = new TreeSet<>();
-		valoresMoeda.add(new BigDecimal("50"));
-		valoresMoeda.add(new BigDecimal("0.05"));		
-		valoresMoeda.add(new BigDecimal("0.10"));
-		valoresMoeda.add(new BigDecimal("0.25"));		
-		valoresMoeda.add(new BigDecimal("20"));
-		valoresMoeda.add(new BigDecimal("0.5"));
-		valoresMoeda.add(new BigDecimal("0.01"));
-		valoresMoeda.add(new BigDecimal("10"));
-		valoresMoeda.add(new BigDecimal("1"));
-		valoresMoeda.add(new BigDecimal("2"));
-		valoresMoeda.add(new BigDecimal("5"));
-		valoresMoeda.add(new BigDecimal("10"));		
-		valoresMoeda.add(new BigDecimal("50"));
-		valoresMoeda.add(new BigDecimal("0.5"));
-		valoresMoeda.add(new BigDecimal("100"));
+		Moeda dollar = fabricaDeMoeda.obterMoeda("USD");
+		Moeda real = fabricaDeMoeda.obterMoeda("BRL");
 		
-		return valoresMoeda;
-	}
-	
-	
-	private SortedSet<BigDecimal> getValoresMoedaReal(){
+		MoedasSuportadas moedasSuportadas = new MoedasSuportadas();
+		moedasSuportadas.adicionarMoeda(dollar);
+		moedasSuportadas.adicionarMoeda(real);
 		
-		SortedSet<BigDecimal> valoresMoeda = new TreeSet<>();
-		valoresMoeda.add(new BigDecimal("50"));
-		valoresMoeda.add(new BigDecimal("0.05"));		
-		valoresMoeda.add(new BigDecimal("0.10"));
-		valoresMoeda.add(new BigDecimal("0.25"));		
-		valoresMoeda.add(new BigDecimal("20"));
-		valoresMoeda.add(new BigDecimal("0.5"));
-		valoresMoeda.add(new BigDecimal("10"));
-		valoresMoeda.add(new BigDecimal("1"));
-		valoresMoeda.add(new BigDecimal("2"));
-		valoresMoeda.add(new BigDecimal("5"));
-		valoresMoeda.add(new BigDecimal("10"));		
-		valoresMoeda.add(new BigDecimal("50"));
-		valoresMoeda.add(new BigDecimal("0.5"));
-		valoresMoeda.add(new BigDecimal("100"));
-		
-		return valoresMoeda;
-	}
+		ObjectMapper mapper = new ObjectMapper();
 
+		String moedasJson = mapper.writeValueAsString(moedasSuportadas);
+		
+		System.out.println(moedasJson);
+	}
 }

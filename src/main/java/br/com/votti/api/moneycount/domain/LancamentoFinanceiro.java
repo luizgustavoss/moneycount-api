@@ -4,6 +4,9 @@ import java.math.BigDecimal;
 
 import org.springframework.util.StringUtils;
 
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+
 /**
  * LancamentoFinanceiro representa um valor com uma identificação única. <p>
  * 
@@ -15,6 +18,8 @@ import org.springframework.util.StringUtils;
  * @author Luiz Gustavo S. de Souza (luizgustavoss@gmail.com)
  *
  */
+@Getter
+@EqualsAndHashCode(of={"id", "codigo"})
 public class LancamentoFinanceiro {
 
 	private String id;
@@ -35,19 +40,4 @@ public class LancamentoFinanceiro {
 		this.valor = valor;
 	}
 
-	public String getId() {
-		return id;
-	}
-
-	public String getCodigo() {
-		return codigo;
-	}
-	
-	public String getDescricao() {
-		return descricao;
-	}
-	
-	public BigDecimal getValor() {
-		return valor;
-	}
 }

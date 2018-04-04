@@ -1,11 +1,14 @@
 package br.com.votti.api.moneycount.domain;
 
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.is;
+
 import java.math.BigDecimal;
 import java.util.Map;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
-import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -22,7 +25,7 @@ public class MapaDeMoedaTest {
 
 
 	@Test
-	public void testarCalculoDeMapaDeNotasDoLancamentoValorValidoSemResto() throws JsonProcessingException {
+	public void testarCalculoDeMapaDeNotasDoLancamentoComValorValidoSemResto() throws JsonProcessingException {
 		
 		Moeda moeda = obterMoedaReal();
 		FiltroDeMoeda filtro = new FiltroDeMoeda(moeda);
@@ -33,26 +36,26 @@ public class MapaDeMoedaTest {
 		Map<BigDecimal, Integer> mapaMoeda = mapa.obterMapa();
 		BigDecimal valorRestante = mapa.obterValorRestante();
 		
-		Assert.assertEquals(0, valorRestante.compareTo(BigDecimal.ZERO));
+		assertThat(0, is(equalTo(valorRestante.compareTo(BigDecimal.ZERO))));
 		
-		Assert.assertEquals(new Integer(0), mapaMoeda.get(new BigDecimal("0.05")));
-		Assert.assertEquals(new Integer(0), mapaMoeda.get(new BigDecimal("0.10")));
-		Assert.assertEquals(new Integer(0), mapaMoeda.get(new BigDecimal("0.25")));
-		Assert.assertEquals(new Integer(0), mapaMoeda.get(new BigDecimal("0.5")));
-		Assert.assertEquals(new Integer(0), mapaMoeda.get(new BigDecimal("1")));
-		Assert.assertEquals(new Integer(1), mapaMoeda.get(new BigDecimal("2")));
-		Assert.assertEquals(new Integer(1), mapaMoeda.get(new BigDecimal("5")));
-		Assert.assertEquals(new Integer(0), mapaMoeda.get(new BigDecimal("10")));
-		Assert.assertEquals(new Integer(2), mapaMoeda.get(new BigDecimal("20")));
-		Assert.assertEquals(new Integer(1), mapaMoeda.get(new BigDecimal("50")));
-		Assert.assertEquals(new Integer(1), mapaMoeda.get(new BigDecimal("100")));
+		assertThat(new Integer(0), is(equalTo(mapaMoeda.get(new BigDecimal("0.05")))));
+		assertThat(new Integer(0), is(equalTo(mapaMoeda.get(new BigDecimal("0.10")))));
+		assertThat(new Integer(0), is(equalTo(mapaMoeda.get(new BigDecimal("0.25")))));
+		assertThat(new Integer(0), is(equalTo(mapaMoeda.get(new BigDecimal("0.5")))));
+		assertThat(new Integer(0), is(equalTo(mapaMoeda.get(new BigDecimal("1")))));
+		assertThat(new Integer(1), is(equalTo(mapaMoeda.get(new BigDecimal("2")))));
+		assertThat(new Integer(1), is(equalTo(mapaMoeda.get(new BigDecimal("5")))));
+		assertThat(new Integer(0), is(equalTo(mapaMoeda.get(new BigDecimal("10")))));
+		assertThat(new Integer(2), is(equalTo(mapaMoeda.get(new BigDecimal("20")))));
+		assertThat(new Integer(1), is(equalTo(mapaMoeda.get(new BigDecimal("50")))));
+		assertThat(new Integer(1), is(equalTo(mapaMoeda.get(new BigDecimal("100")))));
 		
 	}
 	
 	
 	
 	@Test
-	public void testarCalculoDeMapaDeNotasDoLancamentoValorValidoComResto() throws JsonProcessingException {
+	public void testarCalculoDeMapaDeNotasDoLancamentoComValorValidoComResto() throws JsonProcessingException {
 		
 		Moeda moeda = obterMoedaReal();
 		FiltroDeMoeda filtro = new FiltroDeMoeda(moeda);
@@ -63,19 +66,19 @@ public class MapaDeMoedaTest {
 		Map<BigDecimal, Integer> mapaMoeda = mapa.obterMapa();
 		BigDecimal valorRestante = mapa.obterValorRestante();
 		
-		Assert.assertEquals(0, valorRestante.compareTo(new BigDecimal("0.03")));
+		assertThat(0, is(equalTo(valorRestante.compareTo(new BigDecimal("0.03")))));
 		
-		Assert.assertEquals(new Integer(1), mapaMoeda.get(new BigDecimal("0.05")));
-		Assert.assertEquals(new Integer(0), mapaMoeda.get(new BigDecimal("0.10")));
-		Assert.assertEquals(new Integer(1), mapaMoeda.get(new BigDecimal("0.25")));
-		Assert.assertEquals(new Integer(0), mapaMoeda.get(new BigDecimal("0.5")));
-		Assert.assertEquals(new Integer(0), mapaMoeda.get(new BigDecimal("1")));
-		Assert.assertEquals(new Integer(1), mapaMoeda.get(new BigDecimal("2")));
-		Assert.assertEquals(new Integer(1), mapaMoeda.get(new BigDecimal("5")));
-		Assert.assertEquals(new Integer(0), mapaMoeda.get(new BigDecimal("10")));
-		Assert.assertEquals(new Integer(2), mapaMoeda.get(new BigDecimal("20")));
-		Assert.assertEquals(new Integer(1), mapaMoeda.get(new BigDecimal("50")));
-		Assert.assertEquals(new Integer(1), mapaMoeda.get(new BigDecimal("100")));
+		assertThat(new Integer(1), is(equalTo(mapaMoeda.get(new BigDecimal("0.05")))));
+		assertThat(new Integer(0), is(equalTo(mapaMoeda.get(new BigDecimal("0.10")))));
+		assertThat(new Integer(1), is(equalTo(mapaMoeda.get(new BigDecimal("0.25")))));
+		assertThat(new Integer(0), is(equalTo(mapaMoeda.get(new BigDecimal("0.5")))));
+		assertThat(new Integer(0), is(equalTo(mapaMoeda.get(new BigDecimal("1")))));
+		assertThat(new Integer(1), is(equalTo(mapaMoeda.get(new BigDecimal("2")))));
+		assertThat(new Integer(1), is(equalTo(mapaMoeda.get(new BigDecimal("5")))));
+		assertThat(new Integer(0), is(equalTo(mapaMoeda.get(new BigDecimal("10")))));
+		assertThat(new Integer(2), is(equalTo(mapaMoeda.get(new BigDecimal("20")))));
+		assertThat(new Integer(1), is(equalTo(mapaMoeda.get(new BigDecimal("50")))));
+		assertThat(new Integer(1), is(equalTo(mapaMoeda.get(new BigDecimal("100")))));
 		
 	}
 	

@@ -59,6 +59,17 @@ public class FiltroDeMoeda {
 	}
 	
 	
+	
+	/**
+	 * Retorna o estado do filtro de moeda
+	 * 
+	 * @return
+	 */
+	public Map<BigDecimal, Boolean> obterFiltro(){
+		return Collections.unmodifiableMap(this.filtro);
+	}
+	
+	
 	/**
 	 * Utilizado para alterações individuais de valores do filtro
 	 * 

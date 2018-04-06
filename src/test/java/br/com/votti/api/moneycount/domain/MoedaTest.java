@@ -24,13 +24,13 @@ import br.com.votti.api.moneycount.infrastructure.RepositorioDeMoedasJson;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes={
-		FabricaDeMoeda.class, 
+		ServicoDeMoeda.class, 
 		RepositorioDeMoedas.class, 
 		RepositorioDeMoedasJson.class})
 public class MoedaTest {
 	
 	@Autowired
-	private FabricaDeMoeda fabricaDeMoeda;
+	private ServicoDeMoeda fabricaDeMoeda;
 	
 	@Test
 	public void testarCriacaoDeMoedaComSucesso() {

@@ -9,17 +9,15 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 
 @Getter
-@EqualsAndHashCode(of={"id", "codigo"})
+@EqualsAndHashCode(of={"codigo"})
 public class EventoFinanceiro {
 
-	private String id;
 	private String codigo;
 	private String descricao;
 	private List<LancamentoFinanceiro> lancamentos;
 	private Moeda moeda;
 	
-	private EventoFinanceiro(String id, String codigo, String descricao, Moeda moeda) {
-		this.id = id;
+	private EventoFinanceiro(String codigo, String descricao, Moeda moeda) {
 		this.codigo = codigo;
 		this.descricao = descricao;
 		this.moeda = moeda;

@@ -19,22 +19,20 @@ import lombok.Getter;
  *
  */
 @Getter
-@EqualsAndHashCode(of={"id", "codigo"})
+@EqualsAndHashCode(of={"codigo"})
 public class LancamentoFinanceiro {
 
-	private String id;
 	private String codigo;
 	private String descricao;
 	private BigDecimal valor;
 	
-	public LancamentoFinanceiro(String id, String codigo, String descricao, BigDecimal valor) {
+	public LancamentoFinanceiro(String codigo, String descricao, BigDecimal valor) {
 		
-		if( StringUtils.isEmpty(id) || StringUtils.isEmpty(codigo) || StringUtils.isEmpty(descricao) ||
+		if( StringUtils.isEmpty(codigo) || StringUtils.isEmpty(descricao) ||
 				valor == null || valor.equals(BigDecimal.ZERO)) {
 			
 			throw new IllegalArgumentException("[LancamentoFinanceiro] Invalid constructor argument!");
 		}
-		this.id = id;
 		this.codigo = codigo;
 		this.descricao = descricao;
 		this.valor = valor;

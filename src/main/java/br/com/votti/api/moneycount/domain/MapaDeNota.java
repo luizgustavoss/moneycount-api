@@ -7,7 +7,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * MapaDeMoeda representa um mapa de notas para um dado valor com base em uma {@link Moeda} e em um
+ * MapaDeNota representa um mapa de notas para um dado valor com base em uma {@link Moeda} e em um
  * {@link FiltroDeMoeda}.<p>
  * 
  * De acordo com as configurações de filtro, valor e moeda é possível obter 
@@ -19,7 +19,7 @@ import java.util.Map;
  * @author Luiz Gustavo S. de Souza (luizgustavoss@gmail.com)
  *
  */
-public class MapaDeMoeda {
+public class MapaDeNota {
 
 	private BigDecimal valorTotal;
 	private Map<BigDecimal, Integer> mapa;
@@ -28,7 +28,7 @@ public class MapaDeMoeda {
 	private FiltroDeMoeda filtro;
 	
 	
-	public MapaDeMoeda(BigDecimal valorTotal, Moeda moeda, FiltroDeMoeda filtro) {
+	public MapaDeNota(BigDecimal valorTotal, Moeda moeda, FiltroDeMoeda filtro) {
 		
 		if(valorTotal == null || moeda == null || filtro == null) {
 			throw new IllegalArgumentException("[MapaDeMoeda] Invalid constructor argument!");
@@ -159,6 +159,13 @@ public class MapaDeMoeda {
 	 */
 	public BigDecimal obterValorRestante() {
 		return valorRestante;
+	}
+	
+	/**
+	 * 
+	 */
+	public BigDecimal obterValorTotal() {
+		return this.valorTotal;
 	}
 	
 }

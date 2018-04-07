@@ -1,6 +1,7 @@
 package br.com.votti.api.moneycount.application.dto;
 
-import java.util.List;
+import java.math.BigDecimal;
+import java.util.Map;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -13,11 +14,11 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class EventoDTO {
+public class MapaDeNotaDTO {
 
-	private String codigo;
-	private String descricao;
-	private List<LancamentoDTO> lancamentos;
-	private MoedaDTO moeda;
-	private FiltroDeMoedaDTO filtro;
+	private BigDecimal valorTotal;
+	private Map<BigDecimal, Integer> mapa;
+	
+	@Builder.Default
+	private BigDecimal valorRestante = BigDecimal.ZERO;
 }

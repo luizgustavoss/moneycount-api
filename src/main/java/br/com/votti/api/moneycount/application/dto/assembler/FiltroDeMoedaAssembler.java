@@ -22,7 +22,6 @@ public class FiltroDeMoedaAssembler {
 		}
 		
 		FiltroDeMoedaDTO dto = FiltroDeMoedaDTO.builder()
-				.moeda(new MoedaDTOAssembler().assembleDTO(filtroDeMoeda.obterMoeda()))
 				.notas(filtroDeMoeda.obterFiltro()).build();
 		
         return dto;

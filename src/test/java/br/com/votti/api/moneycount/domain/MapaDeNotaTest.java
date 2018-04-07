@@ -21,7 +21,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @ActiveProfiles("dev")
-public class MapaDeMoedaTest {
+public class MapaDeNotaTest {
 
 
 	@Test
@@ -31,7 +31,7 @@ public class MapaDeMoedaTest {
 		FiltroDeMoeda filtro = new FiltroDeMoeda(moeda);
 		BigDecimal valor = new BigDecimal("197.00");
 		
-		MapaDeMoeda mapa = new MapaDeMoeda(valor, moeda, filtro);
+		MapaDeNota mapa = new MapaDeNota(valor, moeda, filtro);
 		
 		Map<BigDecimal, Integer> mapaMoeda = mapa.obterMapa();
 		BigDecimal valorRestante = mapa.obterValorRestante();
@@ -61,7 +61,7 @@ public class MapaDeMoedaTest {
 		FiltroDeMoeda filtro = new FiltroDeMoeda(moeda);
 		BigDecimal valor = new BigDecimal("197.33");
 		
-		MapaDeMoeda mapa = new MapaDeMoeda(valor, moeda, filtro);
+		MapaDeNota mapa = new MapaDeNota(valor, moeda, filtro);
 		
 		Map<BigDecimal, Integer> mapaMoeda = mapa.obterMapa();
 		BigDecimal valorRestante = mapa.obterValorRestante();
@@ -91,7 +91,7 @@ public class MapaDeMoedaTest {
 		FiltroDeMoeda filtro = new FiltroDeMoeda(moeda);
 		BigDecimal valor = null;
 		
-		new MapaDeMoeda(valor, moeda, filtro);
+		new MapaDeNota(valor, moeda, filtro);
 	}
 	
 	
@@ -102,7 +102,7 @@ public class MapaDeMoedaTest {
 		FiltroDeMoeda filtro = null;
 		BigDecimal valor = null;
 		
-		new MapaDeMoeda(valor, moeda, filtro);
+		new MapaDeNota(valor, moeda, filtro);
 	}
 	
 	
@@ -114,7 +114,7 @@ public class MapaDeMoedaTest {
 		FiltroDeMoeda filtro = null;
 		BigDecimal valor = new BigDecimal("197.33");
 		
-		new MapaDeMoeda(valor, moeda, filtro);
+		new MapaDeNota(valor, moeda, filtro);
 	}
 	
 	
@@ -125,7 +125,7 @@ public class MapaDeMoedaTest {
 		FiltroDeMoeda filtro = new FiltroDeMoeda(obterMoedaReal());
 		BigDecimal valor = new BigDecimal("197.33");
 		
-		new MapaDeMoeda(valor, moeda, filtro);
+		new MapaDeNota(valor, moeda, filtro);
 	}
 	
 	
@@ -138,7 +138,7 @@ public class MapaDeMoedaTest {
 		FiltroDeMoeda filtro = new FiltroDeMoeda(dollar);
 		BigDecimal valor = new BigDecimal("197.33");
 		
-		new MapaDeMoeda(valor, real, filtro);
+		new MapaDeNota(valor, real, filtro);
 	}
 	
 	

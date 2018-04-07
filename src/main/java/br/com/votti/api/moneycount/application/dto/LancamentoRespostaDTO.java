@@ -17,10 +17,10 @@ import lombok.Setter;
 @AllArgsConstructor
 @Builder
 @JsonInclude(Include.NON_NULL)
-public class LancamentoDTO {
+public class LancamentoRespostaDTO {
 
 	private String codigo;
 	private String descricao;
 	private BigDecimal valor;
-	private MapaDeMoedaDTO mapaDeMoedas;
+	private MapaDeNotaDTO mapaDeMoedas;
 }

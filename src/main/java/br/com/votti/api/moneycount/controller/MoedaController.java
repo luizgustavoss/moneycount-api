@@ -22,21 +22,27 @@ public class MoedaController {
 	@Autowired
 	private MoedaApplicationService service;
 	
-	
-	
+	/**
+	 * 
+	 * @return
+	 */
 	@RequestMapping(method = RequestMethod.GET)
-	public ResponseEntity<?> obterTodasMoedasDisponiveis() {
+	public ResponseEntity<List<MoedaDTO>> obterTodasMoedasDisponiveis() {
 
 		List<MoedaDTO> result = service.obterMoedasDisponiveis();
-		return new ResponseEntity<>(result, HttpStatus.OK);
+		return new ResponseEntity<List<MoedaDTO>>(result, HttpStatus.OK);
 	}
-
 	
+	/**
+	 * 
+	 * @param codigo
+	 * @return
+	 */
 	@RequestMapping(value = "/{codigo}", method = RequestMethod.GET)
-	public ResponseEntity<?> obterMoedaPorCodigo(@PathVariable String codigo) {
+	public ResponseEntity<MoedaDTO> obterMoedaPorCodigo(@PathVariable String codigo) {
 
 		MoedaDTO result = service.obterMoeda(codigo);
-		return new ResponseEntity<>(result, HttpStatus.OK);
+		return new ResponseEntity<MoedaDTO>(result, HttpStatus.OK);
 	}
 
 	

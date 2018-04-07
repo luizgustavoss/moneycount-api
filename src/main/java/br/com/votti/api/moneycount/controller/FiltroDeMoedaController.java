@@ -21,11 +21,15 @@ public class FiltroDeMoedaController {
 	@Autowired
 	private FiltroDeMoedaApplicationService service;
 	
-	
+	/**
+	 * 
+	 * @param codigoDaMoeda
+	 * @return
+	 */
 	@RequestMapping(value = "/{codigoDaMoeda}", method = RequestMethod.GET)
-	public ResponseEntity<?> obterFiltroParaMoeda(@PathVariable String codigoDaMoeda) {
+	public ResponseEntity<FiltroDeMoedaDTO> obterFiltroParaMoeda(@PathVariable String codigoDaMoeda) {
 
 		FiltroDeMoedaDTO result = service.obterFiltroParaMoeda(codigoDaMoeda);
-		return new ResponseEntity<>(result, HttpStatus.OK);
+		return new ResponseEntity<FiltroDeMoedaDTO>(result, HttpStatus.OK);
 	}
 }

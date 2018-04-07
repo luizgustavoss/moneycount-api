@@ -34,12 +34,12 @@ public class MapaDeNotasController {
 	 * @return
 	 */
 	@RequestMapping(value="/processarEvento", method = RequestMethod.POST)
-	public ResponseEntity<?> processarMapaDeNotasDoEvento(@RequestBody EventoSolicitacaoDTO evento) {
+	public ResponseEntity<EventoRespostaDTO> processarMapaDeNotasDoEvento(@RequestBody EventoSolicitacaoDTO evento) {
 
 		EventoRespostaDTO result = processamentoDeMapaDeNotasDeEventoService
 				.processarMapaDeNotasDoEvento(evento);
 		
-		return new ResponseEntity<>(result, HttpStatus.OK);
+		return new ResponseEntity<EventoRespostaDTO>(result, HttpStatus.OK);
 	}
 	
 	
@@ -49,12 +49,12 @@ public class MapaDeNotasController {
 	 * @return
 	 */
 	@RequestMapping(value="/processarLancamento", method = RequestMethod.POST)
-	public ResponseEntity<?> processarMapaDeNotasDoLancamento(@RequestBody LancamentoSolicitacaoDTO lancamento) {
+	public ResponseEntity<LancamentoRespostaDTO> processarMapaDeNotasDoLancamento(@RequestBody LancamentoSolicitacaoDTO lancamento) {
 
 		LancamentoRespostaDTO result = processamentoDeMapaDeNotasDeLancamentoService
 				.processarMapaDeNotasDoLancamento(lancamento);
 		
-		return new ResponseEntity<>(result, HttpStatus.OK);
+		return new ResponseEntity<LancamentoRespostaDTO>(result, HttpStatus.OK);
 	}
 	
 }

@@ -15,10 +15,12 @@ import br.com.votti.api.moneycount.application.dto.EventoRespostaDTO;
 import br.com.votti.api.moneycount.application.dto.EventoSolicitacaoDTO;
 import br.com.votti.api.moneycount.application.dto.LancamentoRespostaDTO;
 import br.com.votti.api.moneycount.application.dto.LancamentoSolicitacaoDTO;
+import io.swagger.annotations.Api;
 
 @RestController
 @CrossOrigin
 @RequestMapping("/mapaDeNotas")
+@Api(tags={"Mapa de Notas"})
 public class MapaDeNotasController {
 
 	

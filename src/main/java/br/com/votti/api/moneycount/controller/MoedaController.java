@@ -13,10 +13,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 import br.com.votti.api.moneycount.application.MoedaApplicationService;
 import br.com.votti.api.moneycount.application.dto.MoedaDTO;
+import io.swagger.annotations.Api;
 
 @RestController
 @CrossOrigin
 @RequestMapping("/moedas")
+@Api(tags={"Moeda"})
 public class MoedaController {
 
 	@Autowired

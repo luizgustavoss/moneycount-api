@@ -32,7 +32,7 @@ public class RepositorioDeMoedasJson implements RepositorioDeMoedas {
 	
 	
 	private File lerArquivoDeDefinicaoDeMoedas() {
-		ClassLoader classLoader = this.getClass().getClassLoader();
+		ClassLoader classLoader = getClass().getClassLoader();
         File file = new File(classLoader.getResource("moedas.json").getFile());
 		return file;
 	}

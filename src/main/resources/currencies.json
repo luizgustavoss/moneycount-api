@@ -1,0 +1,5 @@
+{"availableSupportedCurrencies":[
+	{"code":"BRL","name":"Real","symbol":"R$","values":[0.05,0.10,0.25,0.5,1,2,5,10,20,50,100]},
+	{"code":"USD","name":"Dollar","symbol":"$","values":[0.01,0.05,0.10,0.25,0.5,1,2,5,10,20,50,100]}
+]
+}

@@ -24,33 +24,14 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 
 import br.com.votti.api.moneycount.error.ErrorDetail;
 import br.com.votti.api.moneycount.error.ValidationError;
+import br.com.votti.api.moneycount.exceptions.SupportedCurrencyDefNotFoundException;
 
-/**
- * Handler class responsible for handle exceptions on controllers.
- * 
- * The ResponseEntityExceptionHandler class contains a set of protected methods
- * that handle standard exception and return a ResponseEntity instance
- * containing error details. Extending the ResponseEntityExceptionHandler class
- * allows us to override the protected method associated with the exception and
- * return an ErrorDetail instance.
- * 
- * @author Luiz Gustavo S. de Souza (luizgustavoss@gmail.com)
- *
- */
 @ControllerAdvice
 public class RestExceptionHandler extends ResponseEntityExceptionHandler {
 
 	@Autowired
 	private MessageSource messageSource;
 
-	/**
-	 * Handler method responsible for catching ResourceNotFoundException
-	 * exceptions
-	 * 
-	 * @param rnfe
-	 * @param request
-	 * @return
-	 */
 	@ExceptionHandler(ResourceNotFoundException.class)
 	@ResponseStatus(HttpStatus.NOT_FOUND)
 	public ResponseEntity<?> handleResourceNotFoundException(ResourceNotFoundException rnfe,
@@ -65,10 +46,23 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
 
 		return new ResponseEntity<>(errorDetail, null, HttpStatus.NOT_FOUND);
 	}
+	
+	
+	@ExceptionHandler(SupportedCurrencyDefNotFoundException.class)
+	@ResponseStatus(HttpStatus.NOT_FOUND)
+	public ResponseEntity<?> handleSupportedMoneyDefNotFoundException(ResourceNotFoundException rnfe,
+			HttpServletRequest request) {
 
-	/**
-	 * 
-	 */
+		ErrorDetail errorDetail = new ErrorDetail();
+		errorDetail.setTimeStamp(new Date().getTime());
+		errorDetail.setStatus(HttpStatus.NOT_FOUND.value());
+		errorDetail.setTitle("Supported Money Definition Not Found");
+		errorDetail.setDetail(rnfe.getMessage());
+		errorDetail.setDeveloperMessage(rnfe.getClass().getName());
+
+		return new ResponseEntity<>(errorDetail, null, HttpStatus.NOT_FOUND);
+	}
+
 	@Override
 	protected ResponseEntity<Object> handleHttpMessageNotReadable(HttpMessageNotReadableException ex,
 			HttpHeaders headers, HttpStatus status, WebRequest request) {
@@ -83,14 +77,6 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
 		return handleExceptionInternal(ex, errorDetail, headers, status, request);
 	}
 
-	/**
-	 * Handler method responsible for catching MethodArgumentNotValidException
-	 * exceptions
-	 * 
-	 * @param manve
-	 * @param request
-	 * @return
-	 */
 	@Override
 	public ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException manve,
 			HttpHeaders headers, HttpStatus status, WebRequest request) {
@@ -107,7 +93,6 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
 		errorDetail.setDetail("Input validation failed");
 		errorDetail.setDeveloperMessage(manve.getClass().getName());
 
-		// Create ValidationError instances
 		List<FieldError> fieldErrors = manve.getBindingResult().getFieldErrors();
 
 		for (FieldError fe : fieldErrors) {
@@ -121,7 +106,7 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
 
 			ValidationError validationError = new ValidationError();
 			validationError.setCode(fe.getCode());
-			/* validationError.setMessage(fe.getDefaultMessage()); */
+			validationError.setMessage(fe.getDefaultMessage());
 			validationError.setMessage(messageSource.getMessage(fe, null));
 			validationErrorList.add(validationError);
 		}

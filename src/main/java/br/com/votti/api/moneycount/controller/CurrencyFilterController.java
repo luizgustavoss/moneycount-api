@@ -32,7 +32,7 @@ public class CurrencyFilterController {
     	notes = "${CurrencyFilterController.getFilterForCurrency.notes}", response = CurrencyFilterDTO.class)
 	@ApiResponses(value = {
 			@ApiResponse(code = 404, message = "Filter not found for the entered currency", response = ErrorDetail.class) })
-	public ResponseEntity<CurrencyFilterDTO> getFilterForCurrency(@ApiParam(name="Currency Code", required=true)
+	public ResponseEntity<CurrencyFilterDTO> getFilterForCurrency(@ApiParam(name="currencyCode", value="Currency Code", required=true)
 			@PathVariable String currencyCode) {
 		CurrencyFilterDTO result = service.getFilterForCurrency(currencyCode);
 		return new ResponseEntity<CurrencyFilterDTO>(result, HttpStatus.OK);

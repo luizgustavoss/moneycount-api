@@ -30,6 +30,11 @@ To better undestant the functionality, bellow there are some common terms that b
 **Event** - represents an event in witch you have a group of payments (*Event Entry*) to do. You decide what an *Event* means for you, it could be all the payments to do in one day, or the payments of a week. The important thing is that you can group the values to calculate the amount of notes and coins to be used.
 
 
+### Architectural Decision Records
+
+[Here](./doc/adr/index.md) you can view the ADR index of the project.
+
+
 ### Try It Out!
 
 You can test the API through a Swagger Documentation at this address: https://moneycount-api.herokuapp.com/swagger-ui.html

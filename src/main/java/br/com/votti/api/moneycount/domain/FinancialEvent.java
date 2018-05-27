@@ -33,9 +33,9 @@ public class FinancialEvent {
 	}
 	
 	public BigDecimal getValue() {
-		BigDecimal totalValue = BigDecimal.ZERO;
-		for(FinancialEntry entry : entries)
-			totalValue = totalValue.add(entry.getValue());
+		BigDecimal totalValue = entries.stream()
+			.map(FinancialEntry::getValue)
+			.reduce(BigDecimal.ZERO, BigDecimal::add);
 		return totalValue;
 	}
 

@@ -19,4 +19,5 @@ public class EventResponseDTO {
 	private String description;
 	private List<EventEntryResponseDTO> entries;
 	private CurrencyDTO currency;
+	private CurrencyMapDTO currencyMap;
 }

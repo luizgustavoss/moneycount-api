@@ -1,9 +1,9 @@
 package br.com.votti.api.moneycount.domain;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -26,25 +26,23 @@ public class CurrencyService {
 	}
 	
 	public List<Currency> getAvailableCurrencies(){
-		List<Currency> currencies = new ArrayList<>();
-		currencies.addAll(getAvailableCurrenciesMap().values());
-		return currencies;
+		return getAvailableCurrenciesMap().values().stream().collect(Collectors.toList());
 	}
 	
 	private Map<String, Currency> getAvailableCurrenciesMap(){
 		if(CurrencyService.availableCurrencies == null)
 			initializeAvailableCurrenciesMap();
-			
 		return CurrencyService.availableCurrencies;
 	}
 	
 	private void initializeAvailableCurrenciesMap() {
-		CurrencyService.availableCurrencies = new HashMap<String, Currency>();
+		CurrencyService.availableCurrencies = new HashMap<>();
 		synchronized (CurrencyService.availableCurrencies) {
-			SupportedCurrencies supportedCurrencies = getSupportedCurrencies();
-			for(Currency currency : supportedCurrencies.getAvailableSupportedCurrencies()) {
-				CurrencyService.availableCurrencies.put(currency.getCode(), currency);
-			}
+			CurrencyService.availableCurrencies = 
+				getSupportedCurrencies().getAvailableSupportedCurrencies()
+				.stream().collect(Collectors.toMap(
+					c -> c.getCode(), 
+					c -> c));
 		}
 	}
 	

@@ -6,10 +6,11 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import br.com.votti.api.moneycount.application.dto.EventResponseDTO;
-import br.com.votti.api.moneycount.application.dto.EventProcessDTO;
-import br.com.votti.api.moneycount.application.dto.EventEntryResponseDTO;
+import br.com.votti.api.moneycount.application.dto.CurrencyMapDTO;
 import br.com.votti.api.moneycount.application.dto.EntryProcessDTO;
+import br.com.votti.api.moneycount.application.dto.EventEntryResponseDTO;
+import br.com.votti.api.moneycount.application.dto.EventProcessDTO;
+import br.com.votti.api.moneycount.application.dto.EventResponseDTO;
 import br.com.votti.api.moneycount.application.dto.assembler.CurrencyDTOAssembler;
 import br.com.votti.api.moneycount.domain.Currency;
 import br.com.votti.api.moneycount.domain.CurrencyService;
@@ -46,10 +47,17 @@ public class EventCurrencyMapProcessorService {
 
 	private EventResponseDTO mountEventResponse(EventProcessDTO event, Currency currency,
 			List<EventEntryResponseDTO> entries) {
+		
+		CurrencyMapDTO currencyMapDTO = new CurrencyMapDTO();
+		
+		entries.stream().map(EventEntryResponseDTO::getCurrencyMap)
+		.forEach(cm -> currencyMapDTO.merge(cm));
+		
 		EventResponseDTO eventoResposta = EventResponseDTO.builder()
 				.code(event.getCode())
 				.description(event.getDescription())
 				.currency(new CurrencyDTOAssembler().assembly(currency))
+				.currencyMap(currencyMapDTO)
 				.entries(entries).build();
 		return eventoResposta;
 	}

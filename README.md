@@ -52,7 +52,7 @@ $ mvn clean install spring-boot:run
 
 #### Live
 
-You can test the API live through a Swagger Documentation at this address: https://moneycount-api.herokuapp.com/swagger-ui.html (Don't worry if it takes some time to load the first time)
+You can test the API live through a [Swagger Documentation](https://moneycount-api.herokuapp.com/swagger-ui.html) (Don't worry if it takes some time to load the first time)
 
 
 #### On Docker!

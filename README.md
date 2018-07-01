@@ -35,17 +35,33 @@ To better undestant the functionality, bellow there are some common terms that b
 [Here](./doc/adr/index.md) you can view the ADR index of the project.
 
 
-### Try it out Live!
+### Cloning and Running
+
+
+You can clone and run the project through the commands bellow:
+
+```
+$ git clone https://github.com/luizgustavoss/moneycount-api.git && cd moneycount-api
+
+$ mvn clean install spring-boot:run
+```
+
+
+### Try it out!
+
+
+#### Live
 
 You can test the API live through a Swagger Documentation at this address: https://moneycount-api.herokuapp.com/swagger-ui.html (Don't worry if it takes some time to load the first time)
 
 
-### Try it out on Docker!
+#### On Docker!
 
 If you prefer, you can run directly a docker container from an image of the project:
 
+```
 $ docker run -d -p 8080:8080 luizgustavoss/moneycount-api:latest
-
+```
 
 
 ### Contribute

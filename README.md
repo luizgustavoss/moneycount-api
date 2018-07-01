@@ -8,6 +8,7 @@
 A simple API that can be used to define the amount of notes and coins (cash) you need for one or more monetary values.
 
 
+
 ### Important Concepts
 
 Although this is a simple and straigth API some explanations are important.
@@ -15,6 +16,7 @@ Although this is a simple and straigth API some explanations are important.
 This API is useful for those who need to deal with lots of cash for paying bills. For example, suppose somebody or some company needs to pay its employees some amount of money in cash, with values for each employee being different, for some reason. In most cases it could be paied direcly in bank accounts or even payment in check, but if for some reason it needs to be in cash, withdraw the money in the bank in the exact quantity of notes and coins to sum each payment can be a chalenge. 
 
 Money Count helps in this: you can use the API to calculate the amount of notes and coins for a monetary event (the whole employees payment), and for each entry.
+
 
 
 ### Ubiquitous Language
@@ -30,9 +32,11 @@ To better undestant the functionality, bellow there are some common terms that b
 **Event** - represents an event in witch you have a group of payments (*Event Entry*) to do. You decide what an *Event* means for you, it could be all the payments to do in one day, or the payments of a week. The important thing is that you can group the values to calculate the amount of notes and coins to be used.
 
 
+
 ### Architectural Decision Records
 
 [Here](./doc/adr/index.md) you can view the ADR index of the project.
+
 
 
 ### Cloning and Running
@@ -46,6 +50,7 @@ $ mvn clean install spring-boot:run
 ```
 
 Once you have run the project, you can access http://localhost:8080/swagger-ui.html to see the API documentation.
+
 
 
 ### Try it out!

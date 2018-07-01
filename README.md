@@ -9,7 +9,7 @@ A simple API that can be used to define the amount of notes and coins (cash) you
 
 
 
-### Important Concepts
+## Important Concepts
 
 Although this is a simple and straigth API some explanations are important.
 
@@ -19,7 +19,7 @@ Money Count helps in this: you can use the API to calculate the amount of notes 
 
 
 
-### Ubiquitous Language
+## Ubiquitous Language
 
 To better undestant the functionality, bellow there are some common terms that belong to the ubiquitous language of the context of the project:
 
@@ -33,13 +33,13 @@ To better undestant the functionality, bellow there are some common terms that b
 
 
 
-### Architectural Decision Records
+## Architectural Decision Records
 
 [Here](./doc/adr/index.md) you can view the ADR index of the project.
 
 
 
-### Cloning and Running
+## Cloning and Running
 
 To run the project you must have **_Maven 3.x_** and **_Java 8_** installed and configured. You can clone and run the project through the commands bellow:
 
@@ -53,15 +53,15 @@ Once you have run the project, you can access http://localhost:8080/swagger-ui.h
 
 
 
-### Try it out!
+## Try it out!
 
 
-#### Live
+### Live
 
 You can test the API live through a [Swagger Documentation](https://moneycount-api.herokuapp.com/swagger-ui.html) (Don't worry if it takes some time to load the first time)
 
 
-#### On Docker!
+### On Docker!
 
 If you prefer, you can run directly a docker container from an image of the project:
 
@@ -70,7 +70,7 @@ $ docker run -d -p 8080:8080 luizgustavoss/moneycount-api:latest
 ```
 
 
-### Contribute
+## Contribute
 
 Although this is just an API with educational and learning purposes, feel free to fork it and improve it as you need.
 Future improvements include support to other currencies, NoSQL persistence support for currencies, React UI, Vue UI, Angular UI, etc, all with learning purposes.

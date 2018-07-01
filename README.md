@@ -37,8 +37,7 @@ To better undestant the functionality, bellow there are some common terms that b
 
 ### Cloning and Running
 
-
-You can clone and run the project through the commands bellow:
+To run the project you must have **_Maven 3.x_** and **_Java 8_** installed and configured. You can clone and run the project through the commands bellow:
 
 ```
 $ git clone https://github.com/luizgustavoss/moneycount-api.git && cd moneycount-api

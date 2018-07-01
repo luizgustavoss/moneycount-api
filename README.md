@@ -45,6 +45,8 @@ $ git clone https://github.com/luizgustavoss/moneycount-api.git && cd moneycount
 $ mvn clean install spring-boot:run
 ```
 
+Once you have run the project, you can access http://localhost:8080/swagger-ui.html to see the API documentation.
+
 
 ### Try it out!
 

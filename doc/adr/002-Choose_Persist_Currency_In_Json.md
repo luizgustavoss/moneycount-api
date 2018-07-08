@@ -18,4 +18,4 @@ I decided to use json files to persist supported currencies in the project becau
 
 ## Consequences 
 
-Even if a lot of currencies are supported in the future, no changes are needed in the code, just an update in the json file. A lot of persistence code were saved with a simplier solution.
+Even if a lot of currencies are supported in the future, no changes are needed in the code, just an update in the json file. A lot of persistence code were saved with a simpler solution.

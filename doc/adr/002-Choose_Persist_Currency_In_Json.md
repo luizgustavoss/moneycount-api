@@ -8,7 +8,7 @@ accepted
 
 ## Context 
 
-I have to decide how to persist data related to supported currencies in the project. Choises are a relational database or text files such as txt, xml or json. Even NoSQL databases could be used.
+I have to decide how to persist data related to supported currencies in the project. Choices are a relational database or text files such as txt, xml or json. Even NoSQL databases could be used.
 
 
 ## Decision 

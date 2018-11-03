@@ -13,7 +13,7 @@ A simple API that can be used to define the amount of notes and coins (cash) you
 
 Although this is a simple and straigth API some explanations are important.
 
-This API is useful for those who need to deal with lots of cash for paying bills. For example, suppose somebody or some company needs to pay its employees some amount of money in cash, with values for each employee being different, for some reason. In most cases it could be paied direcly in bank accounts or even payment in check, but if for some reason it needs to be in cash, withdraw the money in the bank in the exact quantity of notes and coins to sum each payment can be a chalenge. 
+This API is useful for those who need to deal with lots of cash for paying bills. For example, suppose somebody or some company needs to pay its employees some amount of money in cash, with values for each employee being different, for some reason. In most cases it could be paied direcly in bank accounts or even payment in check, but if for some reason it needs to be in cash, withdraw the money in the bank in the exact quantity of notes and coins to sum each payment can be a challenge. 
 
 Money Count helps in this: you can use the API to calculate the amount of notes and coins for a monetary event (the whole employees payment), and for each entry.
 

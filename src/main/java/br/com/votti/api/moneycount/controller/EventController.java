@@ -24,7 +24,7 @@ public class EventController {
 	@Autowired
 	private EventCurrencyMapProcessorService processor;
 
-	@RequestMapping(value="/processMap", method = RequestMethod.POST)
+	@RequestMapping(value="/process-map", method = RequestMethod.POST)
 	@ApiOperation(value = "${EventController.processMap.value}", 
 		notes = "${EventController.processMap.notes}", response = EventResponseDTO.class)
 	public ResponseEntity<EventResponseDTO> processMap(@RequestBody EventProcessDTO event) {

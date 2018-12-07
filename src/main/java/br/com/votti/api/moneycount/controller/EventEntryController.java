@@ -17,14 +17,14 @@ import io.swagger.annotations.ApiOperation;
 
 @RestController
 @CrossOrigin
-@RequestMapping("/eventEntries")
+@RequestMapping("/event-entries")
 @Api(tags={"Event Entries"})
 public class EventEntryController {
 
 	@Autowired
 	private EventEntryCurrencyMapProcessorService processor;
 	
-	@RequestMapping(value="/processMap", method = RequestMethod.POST)
+	@RequestMapping(value="/process-map", method = RequestMethod.POST)
 	@ApiOperation(value = "${EventEntryController.processMap.value}", 
 	notes = "${EventEntryController.processMap.notes}", response = EventEntryResponseDTO.class)
 	public ResponseEntity<EventEntryResponseDTO> processMap(@RequestBody EntryProcessDTO entry) {

@@ -20,7 +20,7 @@ import io.swagger.annotations.ApiResponses;
 
 @RestController
 @CrossOrigin
-@RequestMapping("/currencyFilters")
+@RequestMapping("/currency-filters")
 @Api(tags={"Currency Filter"})
 public class CurrencyFilterController {
 

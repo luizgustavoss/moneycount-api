@@ -23,7 +23,7 @@ public class CurrencyFilterController {
 	@Autowired
 	private CurrencyFilterApplicationService service;
 	
-	@RequestMapping(method = RequestMethod.GET)
+	@GetMapping
 	@ApiOperation(value = "${CurrencyFilterController.getFilterForCurrency.value}",
     	notes = "${CurrencyFilterController.getFilterForCurrency.notes}", response = CurrencyFilterDTO.class)
 	@ApiResponses(value = {
@@ -31,6 +31,6 @@ public class CurrencyFilterController {
 	public ResponseEntity<CurrencyFilterDTO> getFilterForCurrency(@ApiParam(name="currency-code", value="Currency Code", required=true)
 			@RequestParam(name = "currency-code") String currencyCode) {
 		CurrencyFilterDTO result = service.getFilterForCurrency(currencyCode);
-		return new ResponseEntity<CurrencyFilterDTO>(result, HttpStatus.OK);
+		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
 }

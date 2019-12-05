@@ -35,70 +35,70 @@ public class CurrencyTest {
 	@Test
 	public void testSuccessfullyCreateCurrency() {
 		
-		Currency moeda = new Currency("USD", "Dollar", "$", CurrencyValueConstructorForTests.getValoresMoedaDollar());
+		Currency currency = new Currency("USD", "Dollar", "$", CurrencyValueConstructorForTests.getCurrencyValuesInDollar());
 		
-		assertThat(moeda, is(notNullValue()));
-		assertThat(moeda.getCode(), is(notNullValue()));
-		assertThat("USD", is(equalTo(moeda.getCode())));
+		assertThat(currency, is(notNullValue()));
+		assertThat(currency.getCode(), is(notNullValue()));
+		assertThat("USD", is(equalTo(currency.getCode())));
 		
-		assertThat(moeda.getName(), is(notNullValue()));
-		assertThat("Dollar", is(equalTo(moeda.getName())));
+		assertThat(currency.getName(), is(notNullValue()));
+		assertThat("Dollar", is(equalTo(currency.getName())));
 		
-		assertThat(moeda.getSymbol(), is(notNullValue()));
-		assertThat("$", is(equalTo(moeda.getSymbol())));
+		assertThat(currency.getSymbol(), is(notNullValue()));
+		assertThat("$", is(equalTo(currency.getSymbol())));
 		
-		assertThat(moeda.getValues(), is(notNullValue()));
-		assertThat(moeda.getValues(), not(empty()));
-		assertThat(12, is(equalTo(moeda.getValues().size())));
+		assertThat(currency.getValues(), is(notNullValue()));
+		assertThat(currency.getValues(), not(empty()));
+		assertThat(12, is(equalTo(currency.getValues().size())));
 	}
 	
 	@Test(expected=IllegalArgumentException.class)
-	public void testarCriacaoDeMoedaComCodigoVazio() {
-		new Currency("", "Dollar", "$", CurrencyValueConstructorForTests.getValoresMoedaDollar());
+	public void testNewCurrencyWithEmptyCode() {
+		new Currency("", "Dollar", "$", CurrencyValueConstructorForTests.getCurrencyValuesInDollar());
 	}
 	
 	@Test(expected=IllegalArgumentException.class)
-	public void testarCriacaoDeMoedaComCodigoNulo() {
-		new Currency(null, "Dollar", "$", CurrencyValueConstructorForTests.getValoresMoedaDollar());
+	public void testNewCurrencyWithNullCode() {
+		new Currency(null, "Dollar", "$", CurrencyValueConstructorForTests.getCurrencyValuesInDollar());
 	}
 	
 	@Test(expected=IllegalArgumentException.class)
-	public void testarCriacaoDeMoedaComDescricaoVazia() {
-		new Currency("USD", "", "$", CurrencyValueConstructorForTests.getValoresMoedaDollar());
+	public void testNewCurrrencyWithEmptyDescription() {
+		new Currency("USD", "", "$", CurrencyValueConstructorForTests.getCurrencyValuesInDollar());
 	}
 	
 	@Test(expected=IllegalArgumentException.class)
-	public void testarCriacaoDeMoedaComDescricaoNula() {
-		new Currency("USD", null, "$", CurrencyValueConstructorForTests.getValoresMoedaDollar());
+	public void testNewCurrencyWithNullDescription() {
+		new Currency("USD", null, "$", CurrencyValueConstructorForTests.getCurrencyValuesInDollar());
 	}
 	
 	
 	@Test(expected=IllegalArgumentException.class)
-	public void testarCriacaoDeMoedaComSimboloMonetarioVazio() {
-		new Currency("USD", "Dollar", "", CurrencyValueConstructorForTests.getValoresMoedaDollar());
+	public void testNewCurrencyWithEmptySymbol() {
+		new Currency("USD", "Dollar", "", CurrencyValueConstructorForTests.getCurrencyValuesInDollar());
 	}
 	
 	@Test(expected=IllegalArgumentException.class)
-	public void testarCriacaoDeMoedaComSimboloMonetarioNulo() {
-		new Currency("USD", "Dollar", null, CurrencyValueConstructorForTests.getValoresMoedaDollar());
+	public void testNewCurrencyWithNullSymbol() {
+		new Currency("USD", "Dollar", null, CurrencyValueConstructorForTests.getCurrencyValuesInDollar());
 	}
 	
 	@Test(expected=IllegalArgumentException.class)
-	public void testarCriacaoDeMoedaComValoresVazios() {
+	public void testNewCurrencyWithEmptyValues() {
 		new Currency("USD", "Dollar", "$", new TreeSet<>());
 	}
 	
 	@Test(expected=IllegalArgumentException.class)
-	public void testarCriacaoDeMoedaComValoresNulo() {
+	public void testNewCurrencyWithNullValues() {
 		new Currency("USD", "Dollar", "$", null);
 	}
 	
 	
 	@Test
-	public void testarComparacaoDeMoedasIguais() {
+	public void testCompareEqualCurrencies() {
 		
-		Currency dollar1 = new Currency("USD", "Dollar", "$", CurrencyValueConstructorForTests.getValoresMoedaDollar());
-		Currency dollar2 = new Currency("USD", "Dollar", "$", CurrencyValueConstructorForTests.getValoresMoedaDollar());
+		Currency dollar1 = new Currency("USD", "Dollar", "$", CurrencyValueConstructorForTests.getCurrencyValuesInDollar());
+		Currency dollar2 = new Currency("USD", "Dollar", "$", CurrencyValueConstructorForTests.getCurrencyValuesInDollar());
 		
 		assertThat(dollar1, is(equalTo(dollar2)));
 		assertThat(dollar2, is(equalTo(dollar1)));
@@ -112,18 +112,17 @@ public class CurrencyTest {
 		
 		assertThat(1, is(equalTo(moedas.size())));
 	}
-	
-	
+
 	
 	@Test
-	public void testarComparacaoDeMoedasDiferentes() {
+	public void testCompareDifferentCurrencies() {
 		
-		Currency dollar = new Currency("USD", "Dollar", "$", CurrencyValueConstructorForTests.getValoresMoedaDollar());
-		Currency real = new Currency("BRL", "Real", "R$", CurrencyValueConstructorForTests.getValoresMoedaReal());
+		Currency dollar = new Currency("USD", "Dollar", "$", CurrencyValueConstructorForTests.getCurrencyValuesInDollar());
+		Currency real = new Currency("BRL", "Real", "R$", CurrencyValueConstructorForTests.getCurrencyValuesInReal());
 		
-		Currency fakedollar1 = new Currency("USD", "Real", "R$", CurrencyValueConstructorForTests.getValoresMoedaReal());
-		Currency fakedollar2 = new Currency("USD", "Dollar", "R$", CurrencyValueConstructorForTests.getValoresMoedaReal());
-		Currency fakedollar3 = new Currency("USD", "Dollar", "$", CurrencyValueConstructorForTests.getValoresMoedaReal());
+		Currency fakedollar1 = new Currency("USD", "Real", "R$", CurrencyValueConstructorForTests.getCurrencyValuesInReal());
+		Currency fakedollar2 = new Currency("USD", "Dollar", "R$", CurrencyValueConstructorForTests.getCurrencyValuesInReal());
+		Currency fakedollar3 = new Currency("USD", "Dollar", "$", CurrencyValueConstructorForTests.getCurrencyValuesInReal());
 		
 		assertThat(dollar, is(not(equalTo(real))));
 		assertThat(real, is(not(equalTo(dollar))));
@@ -143,18 +142,18 @@ public class CurrencyTest {
 	
 	
 	@Test
-	public void testarCriacaoDeListadeMoedasSuportadas() throws JsonProcessingException {
+	public void testCreatingListOfSupportedCurrencies() throws JsonProcessingException {
 		
 		Currency dollar = currencyService.getCurrency("USD");
 		Currency real = currencyService.getCurrency("BRL");
 		
-		SupportedCurrencies moedasSuportadas = new SupportedCurrencies();
-		moedasSuportadas.addCurrency(dollar);
-		moedasSuportadas.addCurrency(real);
+		SupportedCurrencies suppotedCurrencies = new SupportedCurrencies();
+		suppotedCurrencies.addCurrency(dollar);
+		suppotedCurrencies.addCurrency(real);
 		
 		ObjectMapper mapper = new ObjectMapper();
 
-		String moedasJson = mapper.writeValueAsString(moedasSuportadas);
+		String moedasJson = mapper.writeValueAsString(suppotedCurrencies);
 		
 		System.out.println(moedasJson);
 	}

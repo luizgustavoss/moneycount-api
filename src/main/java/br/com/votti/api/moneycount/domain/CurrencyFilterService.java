@@ -1,7 +1,11 @@
 package br.com.votti.api.moneycount.domain;
 
+import br.com.votti.api.moneycount.exceptions.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.text.MessageFormat;
+import java.util.Optional;
 
 @Service
 public class CurrencyFilterService {
@@ -10,9 +14,12 @@ public class CurrencyFilterService {
 	private CurrencyService currencyService;
 	
 	public CurrencyFilter getCurrencyFilter(String currencyCode) {
-		
-		Currency currency = currencyService.getCurrency(currencyCode);
-		CurrencyFilter filter = new CurrencyFilter(currency);
+
+
+		Optional<Currency> opt = currencyService.getCurrency(currencyCode);
+		if(!opt.isPresent())
+			throw new ResourceNotFoundException(MessageFormat.format("Currency not found for code {0}", currencyCode));
+		CurrencyFilter filter = new CurrencyFilter(opt.get());
 		return filter;
 	}
 }

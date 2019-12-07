@@ -1,32 +1,36 @@
 package br.com.votti.api.moneycount.application;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
-import br.com.votti.api.moneycount.application.dto.CurrencyMapDTO;
-import br.com.votti.api.moneycount.application.dto.EntryProcessDTO;
-import br.com.votti.api.moneycount.application.dto.EventEntryResponseDTO;
-import br.com.votti.api.moneycount.application.dto.EventProcessDTO;
-import br.com.votti.api.moneycount.application.dto.EventResponseDTO;
+import br.com.votti.api.moneycount.application.dto.*;
 import br.com.votti.api.moneycount.application.dto.assembler.CurrencyDTOAssembler;
 import br.com.votti.api.moneycount.domain.Currency;
 import br.com.votti.api.moneycount.domain.CurrencyService;
+import br.com.votti.api.moneycount.exceptions.ResourceNotFoundException;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.text.MessageFormat;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 @Service
 public class EventCurrencyMapProcessorService {
 
-	@Autowired
 	private CurrencyService currencyService;
-	@Autowired
 	private EventEntryCurrencyMapProcessorService processor;
-	
-	
+
+	@Autowired
+	public EventCurrencyMapProcessorService(CurrencyService currencyService, EventEntryCurrencyMapProcessorService processor){
+		this.currencyService = currencyService;
+		this.processor = processor;
+	}
+
 	public EventResponseDTO processMap(EventProcessDTO event) {
-		
-		Currency currency = currencyService.getCurrency(event.getCurrencyCode());
+
+		Optional<Currency> opt = currencyService.getCurrency(event.getCurrencyCode());
+		if(!opt.isPresent())
+			throw new ResourceNotFoundException(MessageFormat.format("Currency not found for code {0}", event.getCurrencyCode()));
+		Currency currency = opt.get();
 		
 		List<EventEntryResponseDTO> entries = new ArrayList<>();
 		
@@ -41,11 +45,11 @@ public class EventCurrencyMapProcessorService {
 			
 			entries.add(processor.processMap(entryDTO));
 		});
-		return mountEventResponse(event, currency, entries);
+		return buildEventResponse(event, currency, entries);
 	}
 
 
-	private EventResponseDTO mountEventResponse(EventProcessDTO event, Currency currency,
+	private EventResponseDTO buildEventResponse(EventProcessDTO event, Currency currency,
 			List<EventEntryResponseDTO> entries) {
 		
 		CurrencyMapDTO currencyMapDTO = new CurrencyMapDTO();

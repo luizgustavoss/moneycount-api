@@ -1,13 +1,8 @@
 package br.com.votti.api.moneycount.error.handler;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-
-import javax.servlet.http.HttpServletRequest;
-
+import br.com.votti.api.moneycount.error.ErrorDetail;
+import br.com.votti.api.moneycount.error.ValidationError;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.context.config.ResourceNotFoundException;
 import org.springframework.context.MessageSource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -22,43 +17,38 @@ import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
-import br.com.votti.api.moneycount.error.ErrorDetail;
-import br.com.votti.api.moneycount.error.ValidationError;
-import br.com.votti.api.moneycount.exceptions.SupportedCurrencyDefNotFoundException;
+import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 @ControllerAdvice
 public class RestExceptionHandler extends ResponseEntityExceptionHandler {
 
-	@Autowired
 	private MessageSource messageSource;
 
-	@ExceptionHandler(ResourceNotFoundException.class)
+	@Autowired
+	public RestExceptionHandler(MessageSource messageSource){
+		this.messageSource = messageSource;
+	}
+
+	@ExceptionHandler(org.springframework.boot.context.config.ResourceNotFoundException.class)
 	@ResponseStatus(HttpStatus.NOT_FOUND)
-	public ResponseEntity<?> handleResourceNotFoundException(ResourceNotFoundException rnfe,
-			HttpServletRequest request) {
+	public ResponseEntity<?> handleResourceNotFoundException(org.springframework.boot.context.config.ResourceNotFoundException rnfe,
+                                                             HttpServletRequest request) {
 
-		ErrorDetail errorDetail = new ErrorDetail();
-		errorDetail.setTimeStamp(new Date().getTime());
-		errorDetail.setStatus(HttpStatus.NOT_FOUND.value());
-		errorDetail.setTitle("Resource Not Found");
-		errorDetail.setDetail(rnfe.getMessage());
-		errorDetail.setDeveloperMessage(rnfe.getClass().getName());
-
+		ErrorDetail errorDetail = buildErrorDetail(HttpStatus.NOT_FOUND.value(),
+				"Resource Not Found", rnfe.getMessage(), rnfe.getClass().getName(), null);
 		return new ResponseEntity<>(errorDetail, null, HttpStatus.NOT_FOUND);
 	}
-	
-	
-	@ExceptionHandler(SupportedCurrencyDefNotFoundException.class)
-	@ResponseStatus(HttpStatus.NOT_FOUND)
-	public ResponseEntity<?> handleSupportedMoneyDefNotFoundException(ResourceNotFoundException rnfe,
-			HttpServletRequest request) {
 
-		ErrorDetail errorDetail = new ErrorDetail();
-		errorDetail.setTimeStamp(new Date().getTime());
-		errorDetail.setStatus(HttpStatus.NOT_FOUND.value());
-		errorDetail.setTitle("Supported Money Definition Not Found");
-		errorDetail.setDetail(rnfe.getMessage());
-		errorDetail.setDeveloperMessage(rnfe.getClass().getName());
+	@ExceptionHandler(br.com.votti.api.moneycount.exceptions.ResourceNotFoundException.class)
+	@ResponseStatus(HttpStatus.NOT_FOUND)
+	public ResponseEntity<?> handleCustomResourceNotFoundException(br.com.votti.api.moneycount.exceptions.ResourceNotFoundException rnfe,
+															 HttpServletRequest request) {
+
+		ErrorDetail errorDetail = buildErrorDetail(HttpStatus.NOT_FOUND.value(),
+				"Resource Not Found", rnfe.getMessage(), rnfe.getClass().getName(), null);
 
 		return new ResponseEntity<>(errorDetail, null, HttpStatus.NOT_FOUND);
 	}
@@ -67,13 +57,8 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
 	protected ResponseEntity<Object> handleHttpMessageNotReadable(HttpMessageNotReadableException ex,
 			HttpHeaders headers, HttpStatus status, WebRequest request) {
 
-		ErrorDetail errorDetail = new ErrorDetail();
-		errorDetail.setTimeStamp(new Date().getTime());
-		errorDetail.setStatus(status.value());
-		errorDetail.setTitle("Message Not Readable");
-		errorDetail.setDetail(ex.getMessage());
-		errorDetail.setDeveloperMessage(ex.getClass().getName());
-
+		ErrorDetail errorDetail = buildErrorDetail(status.value(),
+				"Message Not Readable", ex.getMessage(), ex.getClass().getName(), null);
 		return handleExceptionInternal(ex, errorDetail, headers, status, request);
 	}
 
@@ -81,17 +66,11 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
 	public ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException manve,
 			HttpHeaders headers, HttpStatus status, WebRequest request) {
 
-		ErrorDetail errorDetail = new ErrorDetail();
-		errorDetail.setTimeStamp(new Date().getTime());
-		errorDetail.setStatus(HttpStatus.BAD_REQUEST.value());
-
 		String requestPath = (String) request.getAttribute("javax.servlet.error.request_uri",
 				RequestAttributes.SCOPE_REQUEST);
 
-		errorDetail.setTitle("Validation Failed");
-		errorDetail.setPath(requestPath);
-		errorDetail.setDetail("Input validation failed");
-		errorDetail.setDeveloperMessage(manve.getClass().getName());
+		ErrorDetail errorDetail = buildErrorDetail(HttpStatus.BAD_REQUEST.value(),
+				"Validation Failed", "Input validation failed", manve.getClass().getName(), requestPath);
 
 		List<FieldError> fieldErrors = manve.getBindingResult().getFieldErrors();
 
@@ -114,4 +93,17 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
 		return handleExceptionInternal(manve, errorDetail, headers, status, request);
 	}
 
+
+	private ErrorDetail buildErrorDetail(int status, String title, String detail, String developerMessage, String path){
+
+		ErrorDetail errorDetail = new ErrorDetail();
+		errorDetail.setTimeStamp(new Date().getTime());
+		errorDetail.setStatus(status);
+		errorDetail.setTitle(title);
+		errorDetail.setPath(path);
+		errorDetail.setDetail(detail);
+		errorDetail.setDeveloperMessage(developerMessage);
+
+		return errorDetail;
+	}
 }

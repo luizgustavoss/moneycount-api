@@ -1,28 +1,30 @@
 package br.com.votti.api.moneycount.domain;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
-
+import com.google.common.base.Strings;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.google.common.base.Strings;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class CurrencyService {
 
-	@Autowired
 	private CurrencyRepository currencyRepository;
-	
 	private static Map<String, Currency> availableCurrencies;
-	
 
-	public Currency getCurrency(String code) {
+	@Autowired
+	private CurrencyService(CurrencyRepository currencyRepository){
+		this.currencyRepository = currencyRepository;
+	}
+
+	public Optional<Currency> getCurrency(String code) {
 		if(Strings.isNullOrEmpty(code) || !getAvailableCurrenciesMap().containsKey(code))
-			return null;
-		return getAvailableCurrenciesMap().get(code);
+			return Optional.empty();
+		return Optional.ofNullable(getAvailableCurrenciesMap().get(code));
 	}
 	
 	public List<Currency> getAvailableCurrencies(){

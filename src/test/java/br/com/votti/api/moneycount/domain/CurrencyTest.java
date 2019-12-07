@@ -1,32 +1,22 @@
 package br.com.votti.api.moneycount.domain;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.empty;
-import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.Matchers.is;
-import static org.hamcrest.Matchers.not;
-import static org.hamcrest.Matchers.notNullValue;
-
-import java.util.HashSet;
-import java.util.Set;
-import java.util.TreeSet;
-
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.TreeSet;
 
-import br.com.votti.api.moneycount.infrastructure.CurrencyRepositoryJson;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.*;
 
 @RunWith(SpringRunner.class)
-@SpringBootTest(classes={
-		CurrencyService.class, 
-		CurrencyRepository.class, 
-		CurrencyRepositoryJson.class})
+@SpringBootTest
 public class CurrencyTest {
 	
 	@Autowired
@@ -120,16 +110,16 @@ public class CurrencyTest {
 		Currency dollar = new Currency("USD", "Dollar", "$", CurrencyValueConstructorForTests.getCurrencyValuesInDollar());
 		Currency real = new Currency("BRL", "Real", "R$", CurrencyValueConstructorForTests.getCurrencyValuesInReal());
 		
-		Currency fakedollar1 = new Currency("USD", "Real", "R$", CurrencyValueConstructorForTests.getCurrencyValuesInReal());
-		Currency fakedollar2 = new Currency("USD", "Dollar", "R$", CurrencyValueConstructorForTests.getCurrencyValuesInReal());
-		Currency fakedollar3 = new Currency("USD", "Dollar", "$", CurrencyValueConstructorForTests.getCurrencyValuesInReal());
+		Currency fakeDollar1 = new Currency("USD", "Real", "R$", CurrencyValueConstructorForTests.getCurrencyValuesInReal());
+		Currency fakeDollar2 = new Currency("USD", "Dollar", "R$", CurrencyValueConstructorForTests.getCurrencyValuesInReal());
+		Currency fakeDollar3 = new Currency("USD", "Dollar", "$", CurrencyValueConstructorForTests.getCurrencyValuesInReal());
 		
 		assertThat(dollar, is(not(equalTo(real))));
 		assertThat(real, is(not(equalTo(dollar))));
 		
-		assertThat(dollar, is(not(equalTo(fakedollar1))));
-		assertThat(dollar, is(not(equalTo(fakedollar2))));
-		assertThat(dollar, is(not(equalTo(fakedollar3))));
+		assertThat(dollar, is(not(equalTo(fakeDollar1))));
+		assertThat(dollar, is(not(equalTo(fakeDollar2))));
+		assertThat(dollar, is(not(equalTo(fakeDollar3))));
 		
 		assertThat(real, is(equalTo((real))));
 		
@@ -144,8 +134,8 @@ public class CurrencyTest {
 	@Test
 	public void testCreatingListOfSupportedCurrencies() throws JsonProcessingException {
 		
-		Currency dollar = currencyService.getCurrency("USD");
-		Currency real = currencyService.getCurrency("BRL");
+		Currency dollar = currencyService.getCurrency("USD").get();
+		Currency real = currencyService.getCurrency("BRL").get();
 		
 		SupportedCurrencies suppotedCurrencies = new SupportedCurrencies();
 		suppotedCurrencies.addCurrency(dollar);

@@ -27,7 +27,7 @@ public class CurrencyService {
 		return Optional.ofNullable(getAvailableCurrenciesMap().get(code));
 	}
 	
-	public List<Currency> getAvailableCurrencies(){
+	public List<Currency> getAvailableCurrenciesList(){
 		return getAvailableCurrenciesMap().values().stream().collect(Collectors.toList());
 	}
 	

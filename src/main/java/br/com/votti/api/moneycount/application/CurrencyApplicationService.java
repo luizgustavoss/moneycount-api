@@ -27,6 +27,6 @@ public class CurrencyApplicationService {
 	}
 	
 	public List<CurrencyDTO> getAvailableCurrencies(){
-		return new CurrencyDTOAssembler().assembly(currencyService.getAvailableCurrencies());
+		return new CurrencyDTOAssembler().assembly(currencyService.getAvailableCurrenciesList());
 	}
 }

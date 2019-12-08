@@ -1,12 +1,12 @@
 package br.com.votti.api.moneycount.domain;
 
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
 
 @Getter
 @EqualsAndHashCode(of={"code"})

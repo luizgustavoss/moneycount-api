@@ -1,12 +1,8 @@
 package br.com.votti.api.moneycount.domain;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.mockito.runners.MockitoJUnitRunner;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -15,13 +11,9 @@ import java.util.TreeSet;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 
-@RunWith(SpringRunner.class)
-@SpringBootTest
+@RunWith(MockitoJUnitRunner.class)
 public class CurrencyTest {
-	
-	@Autowired
-	private CurrencyService currencyService;
-	
+
 	@Test
 	public void testSuccessfullyCreateCurrency() {
 		
@@ -96,11 +88,11 @@ public class CurrencyTest {
 		assertThat(dollar2, is(not(equalTo("Moeda"))));
 		assertThat(dollar2, is(equalTo(dollar2)));
 		
-		Set<Currency> moedas = new HashSet<>();
-		moedas.add(dollar1);
-		moedas.add(dollar2);
+		Set<Currency> currencies = new HashSet<>();
+		currencies.add(dollar1);
+		currencies.add(dollar2);
 		
-		assertThat(1, is(equalTo(moedas.size())));
+		assertThat(1, is(equalTo(currencies.size())));
 	}
 
 	
@@ -123,28 +115,13 @@ public class CurrencyTest {
 		
 		assertThat(real, is(equalTo((real))));
 		
-		Set<Currency> moedas = new HashSet<>();
-		moedas.add(dollar);
-		moedas.add(real);
+		Set<Currency> currencies = new HashSet<>();
+		currencies.add(dollar);
+		currencies.add(real);
 		
-		assertThat(2, is(equalTo(moedas.size())));
+		assertThat(2, is(equalTo(currencies.size())));
 	}
 	
 	
-	@Test
-	public void testCreatingListOfSupportedCurrencies() throws JsonProcessingException {
-		
-		Currency dollar = currencyService.getCurrency("USD").get();
-		Currency real = currencyService.getCurrency("BRL").get();
-		
-		SupportedCurrencies suppotedCurrencies = new SupportedCurrencies();
-		suppotedCurrencies.addCurrency(dollar);
-		suppotedCurrencies.addCurrency(real);
-		
-		ObjectMapper mapper = new ObjectMapper();
 
-		String moedasJson = mapper.writeValueAsString(suppotedCurrencies);
-		
-		System.out.println(moedasJson);
-	}
 }

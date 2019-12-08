@@ -1,194 +1,189 @@
 package br.com.votti.api.moneycount.domain;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.Matchers.is;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.runners.MockitoJUnitRunner;
 
 import java.math.BigDecimal;
 import java.util.Map;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.junit4.SpringRunner;
-
-import com.fasterxml.jackson.core.JsonProcessingException;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.is;
 
 
-@RunWith(SpringRunner.class)
-@SpringBootTest
-@ActiveProfiles("dev")
+@RunWith(MockitoJUnitRunner.class)
 public class CurrencyMapTest {
 
 
 	@Test
-	public void testarCalculoDeMapaDeNotasDoLancamentoComValorValidoSemResto() throws JsonProcessingException {
+	public void testCalculateCurrencyMapForValidValueWithoutChange() throws JsonProcessingException {
 		
-		Currency moeda = obterMoedaReal();
-		CurrencyFilter filtro = new CurrencyFilter(moeda);
-		BigDecimal valor = new BigDecimal("197.00");
+		Currency currency = getCurrencyReal();
+		CurrencyFilter filter = new CurrencyFilter(currency);
+		BigDecimal value = new BigDecimal("197.00");
 		
-		CurrencyMap mapa = new CurrencyMap(valor, moeda, filtro);
+		CurrencyMap currencyMap = new CurrencyMap(value, currency, filter);
 		
-		Map<BigDecimal, Integer> mapaMoeda = mapa.getMap();
-		BigDecimal valorRestante = mapa.getRemainingValue();
+		Map<BigDecimal, Integer> map = currencyMap.getMap();
+		BigDecimal changeValue = currencyMap.getRemainingValue();
 		
-		assertThat(0, is(equalTo(valorRestante.compareTo(BigDecimal.ZERO))));
+		assertThat(0, is(equalTo(changeValue.compareTo(BigDecimal.ZERO))));
 		
-		assertThat(new Integer(0), is(equalTo(mapaMoeda.get(new BigDecimal("0.05")))));
-		assertThat(new Integer(0), is(equalTo(mapaMoeda.get(new BigDecimal("0.10")))));
-		assertThat(new Integer(0), is(equalTo(mapaMoeda.get(new BigDecimal("0.25")))));
-		assertThat(new Integer(0), is(equalTo(mapaMoeda.get(new BigDecimal("0.5")))));
-		assertThat(new Integer(0), is(equalTo(mapaMoeda.get(new BigDecimal("1")))));
-		assertThat(new Integer(1), is(equalTo(mapaMoeda.get(new BigDecimal("2")))));
-		assertThat(new Integer(1), is(equalTo(mapaMoeda.get(new BigDecimal("5")))));
-		assertThat(new Integer(0), is(equalTo(mapaMoeda.get(new BigDecimal("10")))));
-		assertThat(new Integer(2), is(equalTo(mapaMoeda.get(new BigDecimal("20")))));
-		assertThat(new Integer(1), is(equalTo(mapaMoeda.get(new BigDecimal("50")))));
-		assertThat(new Integer(1), is(equalTo(mapaMoeda.get(new BigDecimal("100")))));
+		assertThat(new Integer(0), is(equalTo(map.get(new BigDecimal("0.05")))));
+		assertThat(new Integer(0), is(equalTo(map.get(new BigDecimal("0.10")))));
+		assertThat(new Integer(0), is(equalTo(map.get(new BigDecimal("0.25")))));
+		assertThat(new Integer(0), is(equalTo(map.get(new BigDecimal("0.5")))));
+		assertThat(new Integer(0), is(equalTo(map.get(new BigDecimal("1")))));
+		assertThat(new Integer(1), is(equalTo(map.get(new BigDecimal("2")))));
+		assertThat(new Integer(1), is(equalTo(map.get(new BigDecimal("5")))));
+		assertThat(new Integer(0), is(equalTo(map.get(new BigDecimal("10")))));
+		assertThat(new Integer(2), is(equalTo(map.get(new BigDecimal("20")))));
+		assertThat(new Integer(1), is(equalTo(map.get(new BigDecimal("50")))));
+		assertThat(new Integer(1), is(equalTo(map.get(new BigDecimal("100")))));
 		
 	}
 	
 	
 	
 	@Test
-	public void testarCalculoDeMapaDeNotasDoLancamentoComValorValidoComResto() throws JsonProcessingException {
+	public void testCalculateCurrencyMapForValidValueWithChange() throws JsonProcessingException {
 		
-		Currency moeda = obterMoedaReal();
-		CurrencyFilter filtro = new CurrencyFilter(moeda);
-		BigDecimal valor = new BigDecimal("197.33");
+		Currency currency = getCurrencyReal();
+		CurrencyFilter filter = new CurrencyFilter(currency);
+		BigDecimal value = new BigDecimal("197.33");
 		
-		CurrencyMap mapa = new CurrencyMap(valor, moeda, filtro);
+		CurrencyMap map = new CurrencyMap(value, currency, filter);
 		
-		Map<BigDecimal, Integer> mapaMoeda = mapa.getMap();
-		BigDecimal valorRestante = mapa.getRemainingValue();
+		Map<BigDecimal, Integer> currencyMap = map.getMap();
+		BigDecimal changeValue = map.getRemainingValue();
 		
-		assertThat(0, is(equalTo(valorRestante.compareTo(new BigDecimal("0.03")))));
+		assertThat(0, is(equalTo(changeValue.compareTo(new BigDecimal("0.03")))));
 		
-		assertThat(new Integer(1), is(equalTo(mapaMoeda.get(new BigDecimal("0.05")))));
-		assertThat(new Integer(0), is(equalTo(mapaMoeda.get(new BigDecimal("0.10")))));
-		assertThat(new Integer(1), is(equalTo(mapaMoeda.get(new BigDecimal("0.25")))));
-		assertThat(new Integer(0), is(equalTo(mapaMoeda.get(new BigDecimal("0.5")))));
-		assertThat(new Integer(0), is(equalTo(mapaMoeda.get(new BigDecimal("1")))));
-		assertThat(new Integer(1), is(equalTo(mapaMoeda.get(new BigDecimal("2")))));
-		assertThat(new Integer(1), is(equalTo(mapaMoeda.get(new BigDecimal("5")))));
-		assertThat(new Integer(0), is(equalTo(mapaMoeda.get(new BigDecimal("10")))));
-		assertThat(new Integer(2), is(equalTo(mapaMoeda.get(new BigDecimal("20")))));
-		assertThat(new Integer(1), is(equalTo(mapaMoeda.get(new BigDecimal("50")))));
-		assertThat(new Integer(1), is(equalTo(mapaMoeda.get(new BigDecimal("100")))));
+		assertThat(new Integer(1), is(equalTo(currencyMap.get(new BigDecimal("0.05")))));
+		assertThat(new Integer(0), is(equalTo(currencyMap.get(new BigDecimal("0.10")))));
+		assertThat(new Integer(1), is(equalTo(currencyMap.get(new BigDecimal("0.25")))));
+		assertThat(new Integer(0), is(equalTo(currencyMap.get(new BigDecimal("0.5")))));
+		assertThat(new Integer(0), is(equalTo(currencyMap.get(new BigDecimal("1")))));
+		assertThat(new Integer(1), is(equalTo(currencyMap.get(new BigDecimal("2")))));
+		assertThat(new Integer(1), is(equalTo(currencyMap.get(new BigDecimal("5")))));
+		assertThat(new Integer(0), is(equalTo(currencyMap.get(new BigDecimal("10")))));
+		assertThat(new Integer(2), is(equalTo(currencyMap.get(new BigDecimal("20")))));
+		assertThat(new Integer(1), is(equalTo(currencyMap.get(new BigDecimal("50")))));
+		assertThat(new Integer(1), is(equalTo(currencyMap.get(new BigDecimal("100")))));
 		
 	}
 	
 	
 	
 	@Test(expected=IllegalArgumentException.class)
-	public void testarCriacaoDeMapaDeNotaSemValor() throws JsonProcessingException {
+	public void testCreateCurrencyMapWithoutValue() throws JsonProcessingException {
 		
-		Currency moeda = obterMoedaReal();
-		CurrencyFilter filtro = new CurrencyFilter(moeda);
-		BigDecimal valor = null;
+		Currency currency = getCurrencyReal();
+		CurrencyFilter filter = new CurrencyFilter(currency);
+		BigDecimal value = null;
 		
-		new CurrencyMap(valor, moeda, filtro);
+		new CurrencyMap(value, currency, filter);
 	}
 	
 	
 	@Test(expected=IllegalArgumentException.class)
-	public void testarCriacaoDeMapaDeNotaComTodosParametrosInvalidos() throws JsonProcessingException {
+	public void testCreateCurrencyMapWithAllInvalidParameters() throws JsonProcessingException {
 		
-		Currency moeda = null;
-		CurrencyFilter filtro = null;
-		BigDecimal valor = null;
+		Currency currency = null;
+		CurrencyFilter filter = null;
+		BigDecimal value = null;
 		
-		new CurrencyMap(valor, moeda, filtro);
+		new CurrencyMap(value, currency, filter);
 	}
 	
 	
 	
 	@Test(expected=IllegalArgumentException.class)
-	public void testarCriacaoDeMapaDeNotaSemFiltro() throws JsonProcessingException {
+	public void testCreateCurrencyMapWithoutFilter() throws JsonProcessingException {
 		
-		Currency moeda = obterMoedaReal();
-		CurrencyFilter filtro = null;
-		BigDecimal valor = new BigDecimal("197.33");
+		Currency currency = getCurrencyReal();
+		CurrencyFilter filter = null;
+		BigDecimal value = new BigDecimal("197.33");
 		
-		new CurrencyMap(valor, moeda, filtro);
+		new CurrencyMap(value, currency, filter);
 	}
 	
 	
 	@Test(expected=IllegalArgumentException.class)
-	public void testarCriacaoDeMapaDeNotaSemMoeda() throws JsonProcessingException {
+	public void testCreateCurrencyMapWithoutCurrency() throws JsonProcessingException {
 		
-		Currency moeda = null;
-		CurrencyFilter filtro = new CurrencyFilter(obterMoedaReal());
-		BigDecimal valor = new BigDecimal("197.33");
+		Currency currency = null;
+		CurrencyFilter filter = new CurrencyFilter(getCurrencyReal());
+		BigDecimal value = new BigDecimal("197.33");
 		
-		new CurrencyMap(valor, moeda, filtro);
+		new CurrencyMap(value, currency, filter);
 	}
 	
 	
 	@Test(expected=IllegalArgumentException.class)
-	public void testarCriacaoDeMapaDeNotaComFiltroInvalido() throws JsonProcessingException {
+	public void testCreateCurrencyMapWithInvalidFilter() throws JsonProcessingException {
 		
-		Currency real = obterMoedaReal();
-		Currency dollar = obterMoedaDollar();
+		Currency real = getCurrencyReal();
+		Currency dollar = getCurrencyDollar();
 		
-		CurrencyFilter filtro = new CurrencyFilter(dollar);
-		BigDecimal valor = new BigDecimal("197.33");
+		CurrencyFilter filter = new CurrencyFilter(dollar);
+		BigDecimal value = new BigDecimal("197.33");
 		
-		new CurrencyMap(valor, real, filtro);
+		new CurrencyMap(value, real, filter);
 	}
 	
 	
 	
-	public Currency obterMoedaReal() {
+	public Currency getCurrencyReal() {
 		
-		SortedSet<BigDecimal> valoresMoeda = new TreeSet<>();
-		valoresMoeda.add(new BigDecimal("50"));
-		valoresMoeda.add(new BigDecimal("0.05"));		
-		valoresMoeda.add(new BigDecimal("0.10"));
-		valoresMoeda.add(new BigDecimal("0.25"));		
-		valoresMoeda.add(new BigDecimal("20"));
-		valoresMoeda.add(new BigDecimal("0.5"));
-		valoresMoeda.add(new BigDecimal("10"));
-		valoresMoeda.add(new BigDecimal("1"));
-		valoresMoeda.add(new BigDecimal("2"));
-		valoresMoeda.add(new BigDecimal("5"));
-		valoresMoeda.add(new BigDecimal("10"));		
-		valoresMoeda.add(new BigDecimal("50"));
-		valoresMoeda.add(new BigDecimal("0.5"));
-		valoresMoeda.add(new BigDecimal("100"));
+		SortedSet<BigDecimal> currencyValues = new TreeSet<>();
+		currencyValues.add(new BigDecimal("50"));
+		currencyValues.add(new BigDecimal("0.05"));
+		currencyValues.add(new BigDecimal("0.10"));
+		currencyValues.add(new BigDecimal("0.25"));
+		currencyValues.add(new BigDecimal("20"));
+		currencyValues.add(new BigDecimal("0.5"));
+		currencyValues.add(new BigDecimal("10"));
+		currencyValues.add(new BigDecimal("1"));
+		currencyValues.add(new BigDecimal("2"));
+		currencyValues.add(new BigDecimal("5"));
+		currencyValues.add(new BigDecimal("10"));
+		currencyValues.add(new BigDecimal("50"));
+		currencyValues.add(new BigDecimal("0.5"));
+		currencyValues.add(new BigDecimal("100"));
 		
-		Currency moeda = new Currency("BRL", "Real", "R$", valoresMoeda);
+		Currency currency = new Currency("BRL", "Real", "R$", currencyValues);
 		
-		return moeda;
+		return currency;
 	}
 	
 	
-	public Currency obterMoedaDollar() {
+	public Currency getCurrencyDollar() {
 		
-		SortedSet<BigDecimal> valoresMoeda = new TreeSet<>();
-		valoresMoeda.add(new BigDecimal("50"));
-		valoresMoeda.add(new BigDecimal("0.05"));		
-		valoresMoeda.add(new BigDecimal("0.10"));
-		valoresMoeda.add(new BigDecimal("0.25"));		
-		valoresMoeda.add(new BigDecimal("20"));
-		valoresMoeda.add(new BigDecimal("0.5"));
-		valoresMoeda.add(new BigDecimal("0.01"));
-		valoresMoeda.add(new BigDecimal("10"));
-		valoresMoeda.add(new BigDecimal("1"));
-		valoresMoeda.add(new BigDecimal("2"));
-		valoresMoeda.add(new BigDecimal("5"));
-		valoresMoeda.add(new BigDecimal("10"));		
-		valoresMoeda.add(new BigDecimal("50"));
-		valoresMoeda.add(new BigDecimal("0.5"));
-		valoresMoeda.add(new BigDecimal("100"));
+		SortedSet<BigDecimal> currencyValues = new TreeSet<>();
+		currencyValues.add(new BigDecimal("50"));
+		currencyValues.add(new BigDecimal("0.05"));
+		currencyValues.add(new BigDecimal("0.10"));
+		currencyValues.add(new BigDecimal("0.25"));
+		currencyValues.add(new BigDecimal("20"));
+		currencyValues.add(new BigDecimal("0.5"));
+		currencyValues.add(new BigDecimal("0.01"));
+		currencyValues.add(new BigDecimal("10"));
+		currencyValues.add(new BigDecimal("1"));
+		currencyValues.add(new BigDecimal("2"));
+		currencyValues.add(new BigDecimal("5"));
+		currencyValues.add(new BigDecimal("10"));
+		currencyValues.add(new BigDecimal("50"));
+		currencyValues.add(new BigDecimal("0.5"));
+		currencyValues.add(new BigDecimal("100"));
 		
-		Currency moeda = new Currency("USD", "Dollar", "$", valoresMoeda);
+		Currency currency = new Currency("USD", "Dollar", "$", currencyValues);
 		
-		return moeda;
+		return currency;
 	}
 
 

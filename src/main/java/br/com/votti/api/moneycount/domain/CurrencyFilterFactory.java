@@ -8,14 +8,16 @@ import java.text.MessageFormat;
 import java.util.Optional;
 
 @Service
-public class CurrencyFilterService {
-	
-	@Autowired
+public class CurrencyFilterFactory {
+
 	private CurrencyService currencyService;
+
+	@Autowired
+	public CurrencyFilterFactory(CurrencyService currencyService){
+		this.currencyService = currencyService;
+	}
 	
 	public CurrencyFilter getCurrencyFilter(String currencyCode) {
-
-
 		Optional<Currency> opt = currencyService.getCurrency(currencyCode);
 		if(!opt.isPresent())
 			throw new ResourceNotFoundException(MessageFormat.format("Currency not found for code {0}", currencyCode));

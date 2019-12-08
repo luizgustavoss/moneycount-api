@@ -7,19 +7,19 @@ import br.com.votti.api.moneycount.application.dto.CurrencyMapDTO;
 import br.com.votti.api.moneycount.application.dto.EntryProcessDTO;
 import br.com.votti.api.moneycount.application.dto.EventEntryResponseDTO;
 import br.com.votti.api.moneycount.domain.CurrencyMap;
-import br.com.votti.api.moneycount.domain.CurrencyMapService;
+import br.com.votti.api.moneycount.domain.CurrencyMapFactory;
 
 @Service
 public class EventEntryCurrencyMapProcessorService {
 
 	@Autowired
-	private CurrencyMapService currencyMapService;
+	private CurrencyMapFactory currencyMapService;
 	
 		
 	public EventEntryResponseDTO processMap(EntryProcessDTO entry) {
 		
 		EventEntryResponseDTO eventEntryResponse = mountEventEntryResponse(entry, 
-				mountCurrencyMapResponse(currencyMapService.getCurrencyMap(
+				mountCurrencyMapResponse(currencyMapService.createCurrencyMap(
 						entry.getValue(), entry.getCurrencyCode(), entry.getFilter().getValues())));
 		return eventEntryResponse;
 	}

@@ -5,13 +5,13 @@ import org.springframework.stereotype.Service;
 
 import br.com.votti.api.moneycount.application.dto.CurrencyFilterDTO;
 import br.com.votti.api.moneycount.application.dto.assembler.CurrencyFilterDTOAssembler;
-import br.com.votti.api.moneycount.domain.CurrencyFilterService;
+import br.com.votti.api.moneycount.domain.CurrencyFilterFactory;
 
 @Service
 public class CurrencyFilterApplicationService {
 
 	@Autowired
-	private CurrencyFilterService currencyFilterService;
+	private CurrencyFilterFactory currencyFilterService;
 	
 	public CurrencyFilterDTO getFilterForCurrency(String currencyCode) {
 		CurrencyFilterDTO dto = new CurrencyFilterDTOAssembler()

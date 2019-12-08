@@ -1,11 +1,10 @@
 package br.com.votti.api.moneycount.domain;
 
-import java.math.BigDecimal;
-
-import org.springframework.util.StringUtils;
-
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import org.springframework.util.StringUtils;
+
+import java.math.BigDecimal;
 
 @Getter
 @EqualsAndHashCode(of={"code"})
@@ -19,7 +18,7 @@ public class FinancialEntry {
 		
 		if( StringUtils.isEmpty(code) || StringUtils.isEmpty(description) ||
 				value == null || value.equals(BigDecimal.ZERO))
-			throw new IllegalArgumentException("[FinancialEntry] Invalid constructor argument!");
+			throw new IllegalArgumentException("Invalid constructor argument!");
 		
 		this.code = code;
 		this.description = description;
